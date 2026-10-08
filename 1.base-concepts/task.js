@@ -1,17 +1,29 @@
 "use strict";
 
-// Функция расчёта ипотеки
+function solveEquation(a, b, c) {
+  const arr = [];
+  const d = b * b - 4 * a * c;
+
+  if (d < 0) return arr;
+
+  if (d === 0) {
+    arr.push(-b / (2 * a));
+    return arr;
+  }
+
+  arr.push((-b + Math.sqrt(d)) / (2 * a));
+  arr.push((-b - Math.sqrt(d)) / (2 * a));
+  return arr;
+}
+
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   const monthlyPercent = Number(percent) / 100 / 12;
   const creditBody = Number(amount) - Number(contribution);
   const months = Number(countMonths);
 
-  if (creditBody <= 0 || months <= 0) {
-    return 0;
-  }
+  if (creditBody <= 0 || months <= 0) return 0;
 
   let total;
-
   if (monthlyPercent === 0) {
     total = creditBody;
   } else {
@@ -23,24 +35,3 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
 
   return Math.round(total * 100) / 100;
 }
-
-// ---------- Ввод данных ----------
-const percent = Number(prompt("Введите процентную ставку (от 0 до 100):"));
-const contribution = Number(prompt("Введите первоначальный взнос:"));
-const amount = Number(prompt("Введите сумму кредита:"));
-const countMonths = Number(prompt("Введите срок кредита в месяцах:"));
-
-// ---------- Расчёт ----------
-const total = calculateTotalMortgage(percent, contribution, amount, countMonths);
-
-// ---------- Вывод на экран ----------
-const message =
-  "Процентная ставка: " + percent + "%\n" +
-  "Первоначальный взнос: " + contribution + "\n" +
-  "Сумма кредита: " + amount + "\n" +
-  "Срок: " + countMonths + " мес.\n" +
-  "------------------------------\n" +
-  "Общая сумма выплат: " + total;
-
-
-console.log(message);
